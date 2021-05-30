@@ -1,11 +1,10 @@
-exclude: 'docs|node_modules|migrations|.git|.tox'
+exclude: 'docs|node_modules|migrations|.git|.tox|.venv'
 default_stages: [commit]
 fail_fast: true
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
-    exclude: '^*main.[js,css]$'
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
