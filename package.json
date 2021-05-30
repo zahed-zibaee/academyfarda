@@ -1,0 +1,38 @@
+{
+  "name": "academyfarda",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/?"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.9.2",
+    "pixrem": "^5.0.0",
+    "postcss": "^8.3.0",
+    "rtlcss": "^3.2.0",
+    "autoprefixer": "^10.2.6",
+    "bootstrap": "^5.0.1",
+    "browser-sync": "^2.26.14",
+    "cssnano": "^5.0.5",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify-es": "^1.0.4",
+    "jquery": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp generate-assets"
+  }
+}
