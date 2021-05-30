@@ -270,4 +270,5 @@ academyfarda/media/
 
 .pytest_cache/
 
-
+# VSCode
+.vscode/

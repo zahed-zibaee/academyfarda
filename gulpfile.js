@@ -56,8 +56,7 @@ var paths = pathsConfig()
 function styles() {
   var processCss = [
       autoprefixer(), // adds vendor prefixes
-      pixrem(),       // add fallbacks for rem units
-      rtlcss(),       // change ltr to rtl
+      pixrem()       // add fallbacks for rem units
   ]
 
   var minifyCss = [
@@ -73,7 +72,6 @@ function styles() {
     }).on('error', sass.logError))
     .pipe(plumber()) // Checks for errors
     .pipe(postcss(processCss))
-    .pipe(rename({ suffix: '-rtl' }))
     .pipe(dest(paths.css))
     .pipe(rename({ suffix: '.min' }))
     .pipe(postcss(minifyCss)) // Minifies the result
@@ -83,30 +81,29 @@ function styles() {
 // Styles RTL autoprefixing and minification
 function stylesRtl() {
   var processCss = [
-      autoprefixer(), // adds vendor prefixes
-      pixrem(),       // add fallbacks for rem units
-      rtlcss(),       // change ltr to rtl
-  ]
+    autoprefixer(), // adds vendor prefixes
+    pixrem(),       // add fallbacks for rem units
+    rtlcss(),       // change ltr to rtl
+]
 
-  var minifyCss = [
-      cssnano({ preset: 'default' })   // minify result
-  ]
+var minifyCss = [
+    cssnano({ preset: 'default' })   // minify result
+]
 
-  return src(`${paths.sass}/project.scss`)
-    .pipe(sass({
-      includePaths: [
-        paths.bootstrapSass,
-        paths.sass
-      ]
-    }).on('error', sass.logError))
-    .pipe(plumber()) // Checks for errors
-    .pipe(postcss(processCss))
-    .pipe(rtlcss()) // Convert to RTL.
-    .pipe(rename({ suffix: '-rtl' })) // Append "-rtl" to the filename.
-    .pipe(dest(paths.css)) // Output RTL stylesheets.
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(postcss(minifyCss)) // Minifies the result
-    .pipe(dest(paths.css));
+return src(`${paths.sass}/project.scss`)
+  .pipe(sass({
+    includePaths: [
+      paths.bootstrapSass,
+      paths.sass
+    ]
+  }).on('error', sass.logError))
+  .pipe(plumber()) // Checks for errors
+  .pipe(postcss(processCss))
+  .pipe(rename({ suffix: '-rtl' }))
+  .pipe(dest(paths.css))
+  .pipe(rename({ suffix: '.min' }))
+  .pipe(postcss(minifyCss)) // Minifies the result
+  .pipe(dest(paths.css))
 }
 
 // Javascript minification
@@ -159,6 +156,7 @@ function initBrowserSync() {
 
 // Watch
 function watchPaths() {
+  watch(`${paths.sass}/*.scss`, stylesRtl)
   watch(`${paths.sass}/*.scss`, styles)
   watch(`${paths.templates}/**/*.html`).on("change", reload)
   watch([`${paths.js}/*.js`, `!${paths.js}/*.min.js`], scripts).on("change", reload)
