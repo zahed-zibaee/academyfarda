@@ -10,7 +10,7 @@ ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 APPS_DIR = ROOT_DIR / "academyfarda"
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR / ".env"))
@@ -41,9 +41,21 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///academyfarda"),
-}
+if "TRAVIS" in env:
+    DATABASES = {
+        "default": {
+            "NAME": "travis_ci_test",
+            "USER": "postgres",
+            "PASSWORD": "123",
+            "HOST": "127.0.0.1",
+            "PORT": 5433,
+            "ENGINE": "django.db.backends.postgresql",
+        },
+    }
+else:
+    DATABASES = {
+        "default": env.db("DATABASE_URL", default="postgres:///academyfarda"),
+    }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS

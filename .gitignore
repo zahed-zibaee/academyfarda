@@ -272,3 +272,6 @@ academyfarda/media/
 
 # VSCode
 .vscode/
+
+# Environment Variables
+.env
