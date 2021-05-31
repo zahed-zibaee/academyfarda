@@ -7,11 +7,18 @@ python:
 services:
   - postgresql
 addons:
-  postgresql: "12"
+  postgresql: '12'
   apt:
     packages:
-    - postgresql-12
-    - postgresql-client-12
+      - postgresql-12
+      - postgresql-client-12
+env:
+  global:
+    - PGPORT=5433
+    - DB_NAME=testdb
+    - DB_USER=testuser
+    - DB_PASSWORD=testpass
+
 jobs:
   include:
     - name: "Linter"
@@ -34,7 +41,6 @@ jobs:
       install:
         - pip install -r requirements/local.txt
       before_script:
-        - psql -c 'create database travis_ci_test;' -U travis -p 5433
-        - export DATABASE_URL=postgres://travis:@127.0.0.1:5433/travis_ci_test
+        - export DATABASE_URL=postgres://testuser:testpass@127.0.0.1:5433/testdb
       script:
         - "pytest"
