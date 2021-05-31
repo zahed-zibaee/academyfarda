@@ -35,8 +35,8 @@ jobs:
       install:
         - pip install -r requirements/local.txt
       before_script:
-        - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres -p 5433
-        - psql -c "ALTER USER postgres WITH PASSWORD '123';" -U postgres -p 5433
+        - psql -c 'CREATE DATABASE travis_ci_test;' -U travis -p 5433
+        - psql -c "ALTER USER travis WITH PASSWORD '123';" -U travis -p 5433
 
       script:
         - "pytest"
